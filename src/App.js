@@ -1,23 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./pokemonl.png";
+import "./App.css";
+import {
+  Container,
+  Row,
+  Col,
+  InputGroup,
+  Form,
+  Button,
+  Image,
+} from "react-bootstrap/";
+import RecipeCard from "./Components/RecipeCard.js";
+import { useEffect, useState } from "react";
+import Encabezado from "./Components/Encabezado.js";
+import Finder from "./Components/Finder.js";
+import PokemonCard from "./Components/PokemonCard.js";
 
 function App() {
+  const [pokemonList, setPokemonList] = useState([]);
+
+  const [nombre, setNombre] = useState("Nombre");
+  const [name, setName] = useState("Nombre");
+  const [pokemon, setPokemon] = useState("");
+
+  const URL = "https://pokeapi.co/api/v2/pokemon?limit=15&offset=0";
+
+  useEffect(() => {
+    fetch(URL)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.results);
+        setPokemonList(data.results);
+      });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        {<Encabezado logo={logo} titulo={"Pokemons"} />}
+        <Finder texto={"Buscar Pokemon"} foundPokemon={setPokemon} />
+
+        {pokemon && (
+          <PokemonCard
+            name={pokemon.name}
+            image={pokemon.sprites.front_default}
+          />
+        )}
+        {pokemonList.map((pokemon, num) =>(
+          <PokemonCard name={pokemon.name} image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${num+1}.png`} />
+          )
+        )}
+        {}
+      </Container>
     </div>
   );
 }
