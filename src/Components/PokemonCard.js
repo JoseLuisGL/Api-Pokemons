@@ -10,7 +10,7 @@ function PokemonCard({ name, brief, image }) {
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>{brief}</Card.Text>
-          <Button variant="primary">Ver</Button>
+          <Button variant="primary">Ver mas detalles</Button>
         </Card.Body>
       </Card>
     </Col>

@@ -17,12 +17,9 @@ import PokemonCard from "./Components/PokemonCard.js";
 
 function App() {
   const [pokemonList, setPokemonList] = useState([]);
+  const [pokemon, setPokemon] = useState(null); 
 
-  const [nombre, setNombre] = useState("Nombre");
-  const [name, setName] = useState("Nombre");
-  const [pokemon, setPokemon] = useState("");
-
-  const URL = "https://pokeapi.co/api/v2/pokemon?limit=15&offset=0";
+  const URL = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
 
   useEffect(() => {
     fetch(URL)
@@ -36,20 +33,28 @@ function App() {
   return (
     <div className="App">
       <Container>
+        {/* Añadir encabezado */}
         {<Encabezado logo={logo} titulo={"Pokemons"} />}
         <Finder texto={"Buscar Pokemon"} foundPokemon={setPokemon} />
 
-        {pokemon && (
-          <PokemonCard
-            name={pokemon.name}
-            image={pokemon.sprites.front_default}
-          />
-        )}
-        {pokemonList.map((pokemon, num) =>(
-          <PokemonCard name={pokemon.name} image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${num+1}.png`} />
-          )
-        )}
-        {}
+        <Row xs={1} md={4} className="g-4 justify-content-center">
+          {/* Renderizar la tarjeta de Pokemon encontrada si existe */}
+          {pokemon && (
+            <PokemonCard
+              key={pokemon.name}
+              name={pokemon.name}
+              image={pokemon.sprites.front_default}
+            />
+          )}
+          {/* Renderizar las tarjetas de Pokemon desde la lista */}
+          {pokemonList.map((pokemon, num) => (
+            <PokemonCard
+              key={pokemon.name}
+              name={pokemon.name}
+              image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${num + 1}.png`}
+            />
+          ))}
+        </Row>
       </Container>
     </div>
   );
