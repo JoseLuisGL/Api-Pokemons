@@ -1,31 +1,32 @@
+import React, { useEffect, useState } from "react";
 import logo from "./pokemonl.png";
 import "./App.css";
-import {
-  Container,
-  Row,
-  Col,
-  InputGroup,
-  Form,
-  Button,
-  Image,
-} from "react-bootstrap/";
-import RecipeCard from "./Components/RecipeCard.js";
-import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import Encabezado from "./Components/Encabezado.js";
 import Finder from "./Components/Finder.js";
 import PokemonCard from "./Components/PokemonCard.js";
+import PokemonStatsCard from "./Components/PokemonStatsCard.js";
 
 function App() {
   const [pokemonList, setPokemonList] = useState([]);
-  const [pokemon, setPokemon] = useState(null); 
+  const [pokemon, setPokemon] = useState(null);
+  const [pokemonStats, setPokemonStats] = useState([]);
 
-  const URL = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
+  const buscarPokemonAbilities = async (pokemonName) => {
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+      const data = await response.json();
+      const stats = data.stats.map((stat) => stat.stat.name);
+      setPokemonStats(stats);
+    } catch (error) {
+      console.error("Error no se encuentran las estadisticas:", error);
+    }
+  };
 
   useEffect(() => {
-    fetch(URL)
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=15&offset=0")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.results);
         setPokemonList(data.results);
       });
   }, []);
@@ -33,31 +34,24 @@ function App() {
   return (
     <div className="App">
       <Container>
-        {/* Añadir encabezado */}
-        {<Encabezado logo={logo} titulo={"Pokemons"} />}
+        <Encabezado logo={logo} titulo={"Pokemons"} />
         <Finder texto={"Buscar Pokemon"} foundPokemon={setPokemon} />
-
-        <Row xs={1} md={4} className="g-4 justify-content-center">
-          {/* Renderizar la tarjeta de Pokemon encontrada si existe */}
-          {pokemon && (
+        {pokemon && (
+          <>
             <PokemonCard
-              key={pokemon.name}
               name={pokemon.name}
               image={pokemon.sprites.front_default}
+              onSeeAbilities={() => buscarPokemonAbilities(pokemon.name)}
             />
-          )}
-          {/* Renderizar las tarjetas de Pokemon desde la lista */}
-          {pokemonList.map((pokemon, num) => (
-            <PokemonCard
-              key={pokemon.name}
-              name={pokemon.name}
-              image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${num + 1}.png`}
-            />
-          ))}
-        </Row>
+            {pokemonStats.length > 0 && (
+              <PokemonStatsCard abilities={pokemonStats} />
+            )}
+          </>
+        )}
       </Container>
     </div>
   );
 }
 
 export default App;
+

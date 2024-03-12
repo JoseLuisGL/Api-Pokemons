@@ -1,16 +1,14 @@
 import React from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
-import defaultImage from "../default.png";
+import { Button, Card, Col } from "react-bootstrap";
 
-function PokemonCard({ name, brief, image }) {
+function PokemonCard({ name, image, onSeeAbilities }) {
   return (
     <Col xs={12} md={3}>
       <Card style={{ marginBottom: "15px" }}>
         <Card.Img variant="top" src={image} />
         <Card.Body>
           <Card.Title>{name}</Card.Title>
-          <Card.Text>{brief}</Card.Text>
-          <Button variant="primary">Ver mas detalles</Button>
+          <Button variant="primary" onClick={onSeeAbilities}>Ver</Button>
         </Card.Body>
       </Card>
     </Col>
@@ -18,4 +16,3 @@ function PokemonCard({ name, brief, image }) {
 }
 
 export default PokemonCard;
-
