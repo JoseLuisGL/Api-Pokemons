@@ -4,11 +4,11 @@ import { Button, Card, Col } from "react-bootstrap";
 function PokemonCard({ name, image, onSeeAbilities }) {
   return (
     <Col xs={12} md={3}>
-      <Card style={{ marginBottom: "15px" }}>
-        <Card.Img variant="top" src={image} />
+      <Card className="pokemon-card">
+        <Card.Img variant="top" src={image} className="pokemon-image" />
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Button variant="primary" onClick={onSeeAbilities}>Ver</Button>
+          <Card.Title className="pokemon-name">{name}</Card.Title>
+          <Button variant="primary" onClick={onSeeAbilities} className="ver-button">Ver</Button>
         </Card.Body>
       </Card>
     </Col>

@@ -5,13 +5,13 @@ import {
   } from "react-bootstrap/";
 function Encabezado({logo, titulo}) {
   return (
-    <Row style={{ paddingBottom: "2em" }}>
+    <Row style={{ paddingBottom: "1em" }}>
       <Col lg={3}>
         <Image
           className="img-thumbnail"
           src={logo}
           rounded
-          sizes="150px"
+          sizes="100px"
         />
       </Col>
 

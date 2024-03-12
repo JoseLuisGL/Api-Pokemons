@@ -36,4 +36,27 @@
     transform: rotate(360deg);
   }
 }
+.pokemon-card {
+  margin-bottom: 15px;
+  border: 2px solid #000;
+  width: 20%;
+  background-color: yellow;
+}
 
+.ver-button {
+  background-color: #2A6EB7;
+  border-color: #2A6EB7;
+  font-size: 20px;
+  color: white;
+}
+
+.pokemon-image {
+  height: 300px;
+  object-fit: cover;
+  border: 5px solid red;
+}
+
+.pokemon-name{
+  font-size: 25px;
+  font-family: 'Times New Roman';
+}
